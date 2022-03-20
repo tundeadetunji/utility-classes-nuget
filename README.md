@@ -10,11 +10,19 @@ You can clone the repository, or install with nuget (<https://www.nuget.org/pack
 ### To use it in your project:
 * Target .Net Framework 4.6 or higher
 * Add using/import statements for:
+
   MultiPurpose.Crypt
+  
   MultiPurpose.Miscellaneous
+  
   MultiPurpose.Sequel
+  
   MultiPurpose.SequelDesktop
+  
   MultiPurpose.SequelWeb
+  
   MultiPurpose.Utility
+  
   MultiPurpose.UtilityDesktop
+  
   MultiPurpose.UtilityWeb
