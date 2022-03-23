@@ -1,5 +1,22 @@
 ﻿Imports System.Data.SqlClient
+Imports MultiPurpose.Utility
 Public Class Sequel
+#Region ""
+	Public Enum CommitDataTo
+		CSV = 0
+		Sequel = 1
+	End Enum
+
+	Public Structure CommitDataTargetInfo
+		Public commit_data_to As CommitDataTo
+		Public filename As String
+		'Public table As String
+		'Public connection_string As String
+
+	End Structure
+
+#End Region
+
 #Region "Query Strings"
 
 	Public Enum Queries
@@ -1247,6 +1264,38 @@ Public Class Sequel
 
 #End Region
 
+#Region "CSV"
+	Public Shared Sub CommitData(where_to_place_data As CommitDataTargetInfo, query As String, connection_string As String, Optional parameters_keys_values_ As Array = Nothing)
+		If Mid(query, 1, Len("select")).ToLower <> "select" And Mid(query, 1, Len("update")).ToLower <> "update" Then
+			Return
+		End If
+
+		Dim data As DataTable = GetDataTable(query, connection_string, parameters_keys_values_)
+		Dim header As String = ""
+		Dim content As String = ""
+
+		With data
+			'header
+			For h = 0 To .Columns.Count - 1
+				header &= .Columns(h).ColumnName
+				If h <> .Columns.Count Then header &= ","
+			Next
+
+			For i = 0 To .Rows.Count - 1
+				For j = 0 To .Columns.Count - 1
+					'content
+					content &= .Rows(i).Item(j)
+					If j <> .Columns.Count Then content &= ","
+				Next
+				content &= vbCrLf
+			Next
+		End With
+
+		WriteText(where_to_place_data.filename, header.Trim & vbCrLf & content.Trim)
+	End Sub
+
+#End Region
+
 #Region "Retrieval"
 	Public Shared Function GetDataTable(query As String, connection_string As String, Optional select_parameter_keys_values As Array = Nothing) As DataTable
 
@@ -1412,6 +1461,7 @@ Public Class Sequel
 
 	End Function
 #End Region
+
 #Region "Retrieval - Raw"
 	Public Shared Function QTable(query As String, connection_string As String, Optional select_parameter_keys_values As Array = Nothing) As DataTable
 
