@@ -4,7 +4,7 @@ Utility functions/sub routines that aims at making coding easier, from database 
 
 
 ### To get the code:
-You can clone the repository, or install with nuget (<https://www.nuget.org/packages/TundeAdetunji.UtilityMethodsForDotNetFramework/1.0.0>)
+You can clone the repository, or install with nuget (<https://www.nuget.org/packages/TundeAdetunji.UtilityMethodsForDotNetFramework/1.0.1>)
 
 
 ### To use it in your project:
